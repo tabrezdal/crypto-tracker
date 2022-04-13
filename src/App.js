@@ -5,7 +5,6 @@ import Coin from './comps/Coin';
 
 function App() {
   const [coins, setCoins] = useState([]);
-  const [coinsData, setCoinsData] = useState([]);
   const [search, setSearch] = useState('');
 
 
@@ -13,23 +12,18 @@ function App() {
     axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false')
     .then(res => {
       setCoins(res.data);
-      setCoinsData(res.data);
       console.log(res.data);
-    }).catch(error => alert(error));
+    }).catch(error => console.log(error));
   },[]);
 
 
   const handelChange = e =>{
     setSearch(e.target.value);
-    let textSearch  = e.target.value
-    const filteredCoins = coinsData.filter(coin => 
-      coin.name.toString().toLowerCase().indexOf(textSearch.toLowerCase()) !== -1
+    const filteredCoins = coins.filter(coin => 
+      coin.name.toString().toLowerCase().indexOf(search.toLowerCase()) !== -1
   )
   setCoins(filteredCoins)
 }
-
-
-  
 
 
   return (
@@ -45,14 +39,15 @@ function App() {
   
   {coins.map(coin => {
     return (
-
       <Coin
       key={coin.id}
       name={coin.name}
       image={coin.image}
       symbol={coin.symbol}
       price={coin.current_price}
-      volume={coin.market_cap} />
+      volume={coin.total_volume} 
+      priceChange={coin.price_change_percentage_24h}
+      market_cap={coin.market_cap}  />
     );
     })}
       
