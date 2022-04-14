@@ -68,3 +68,11 @@
   .green {
     color: #11d811;
   }
+
+  .coin-search{
+    position: fixed;
+    top: 0;
+    padding-top: 30px;
+    width: 100%;
+    background: rgb(205, 233, 240);
+  }
